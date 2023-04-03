@@ -8,9 +8,14 @@ import _thread
 from neopixel import Neopixel
 
 from umodbus.serial import ModbusRTU
+import os
+from umodbus import version
+import json
 
-#while True:
-#    time.sleep(1)
+import modbus_registers
+
+slave_addr = 10             # address on bus as client
+modbus_baud = 115200
 
 tick_timer_period = 20 # Hz
 systick = 0
@@ -19,12 +24,10 @@ systick = 0
 rtu_pins = (Pin(12), Pin(13))     # (TX, RX)
 uart_id = 0
 
-slave_addr = 10             # address on bus as client
-
 client = ModbusRTU(
     addr=slave_addr,        # address on bus
     pins=rtu_pins,          # given as tuple (TX, RX)
-    baudrate=115200,        # optional, default 9600
+    baudrate=modbus_baud,        # optional, default 9600
     data_bits=8,          # optional, default 8
     stop_bits=1,          # optional, default 1
     parity=None,          # optional, default None
@@ -61,10 +64,6 @@ screen_update_counter = 0
 # Set up the action timer.
 tim = Timer()
 
-# Set up heartbeat
-led = Pin(1, Pin.OUT)
-onboard_led_count = 10
-
 # set up the neopixels
 
 numpix = 3
@@ -93,14 +92,8 @@ led_update_counter = 0
 # Main Timer ISR
 def tick(timer):                # we will receive the timer object when being called
     global systick
-    global onboard_led_count
     global led
     global screen_update_counter, led_update_counter
-    if onboard_led_count == 0:
-        led.toggle()                # toggle the LED
-        onboard_led_count = 10
-    else:
-        onboard_led_count = onboard_led_count - 1
         
     screen_update_counter = screen_update_counter - 1
     if screen_update_counter < 0:
@@ -114,8 +107,22 @@ def tick(timer):                # we will receive the timer object when being ca
         
 tim.init(freq=tick_timer_period, mode=Timer.PERIODIC, callback=tick)  # 50ms timer period
 
-# Main Loop - this will be used to poll jog buttons and joystick for continuous movement
+# define Modbus Registers here
+register_definitions = modbus_registers.registers
+
+print('Setting up registers ...')
+# use the defined values of each register type provided by register_definitions
+client.setup_registers(registers=register_definitions)
+print('Register setup done')
+
+print('Serving as RTU client on address {} at {} baud'.
+      format(slave_addr, modbus_baud))
+
+# Main Loop
 while True:
+    
+    result = client.process()
+    displayline2 = 'status: {}'.format(client.get_hreg(1))
 
     if led_update_counter == 0:
         strip.show()
