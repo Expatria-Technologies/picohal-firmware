@@ -8,15 +8,16 @@ systick = 0
 
 from modbus_registers import client
 import i2c_display
-import neopixel_control
+import indicator_lights
+
+from event_handler import process_event
+
 
 screen_update_period = 5 # update screen every 250ms
 screen_update_counter = 0 
 
 # Set up the action timer.
 tim = Timer()
-
-
 
 led_update_period = 2 # update leds every 100ms
 led_update_counter = 0 
@@ -39,18 +40,21 @@ def tick(timer):                # we will receive the timer object when being ca
         
 tim.init(freq=tick_timer_period, mode=Timer.PERIODIC, callback=tick)  # 50ms timer period
 
+i2c_display.displayline1 = 'PicoHAL uPython Modbus'
+
 # Main Loop
 while True:
     
     result = client.process()
-    i2c_display.displayline2 = 'status: {}'.format(client.get_hreg(1))
-    i2c_display.displayline3 = "tick " + str(systick)
+    process_event()
 
     if led_update_counter == 0:
-        neopixel_control.strip.show()
+        indicator_lights.process_indicators()
         led_update_counter = led_update_period
         
     if screen_update_counter == 0:
+        i2c_display.displayline2 = 'status: {}'.format(client.get_hreg(1))
+        i2c_display.displayline3 = "tick " + str(systick)        
         i2c_display.update_display()
         screen_update_counter = screen_update_period
         

@@ -1,14 +1,13 @@
 from peristaltic_pump import set_pump_callback
 from coolant_control import set_coolant_callback
 from event_handler import event_callback
+from spindle_control import set_spindle_callback
+from indicator_lights import set_status_callback
 import i2c_display
 
-from machine import Pin
+from nuts_bolts import enum
 
-def set_status_callback(reg_type, address, val):
-    global client
-    print('status update received')
-    i2c_display.displayline1 = 'status: {}'.format(client.get_hreg(1))
+from machine import Pin
     
 def set_output_callback(reg_type, address, val):
     print('output pin update received')
@@ -55,7 +54,30 @@ registers = {
             "len": 1,
             "val": 255,
             "on_set_cb": set_pump_callback    
+        },
+        "SPINDLE_RUN_REGISTER": {
+            "register": 200,
+            "len": 1,
+            "val": 0,
+            "on_set_cb": set_spindle_callback    
+        },
+        "SPINDLE_SET_RPM_REGISTER": {
+            "register": 201,
+            "len": 1,
+            "val": 0,
+            "on_set_cb": set_spindle_callback    
         },        
+        "ACTIVE_SPINDLE_REGISTER": {
+            "register": 202,
+            "len": 1,
+            "val": 0,
+            "on_set_cb": set_spindle_callback    
+        },
+        "ACTIVE_SPINDLE_RPM_REGISTER": {
+            "register": 203,
+            "len": 1,
+            "val": 0,    
+        },         
     }    
 }
 
@@ -95,6 +117,6 @@ print('Register setup done')
 print('Serving as RTU client on address {} at {} baud'.
       format(slave_addr, modbus_baud))
 
-i2c_display.displayline4 = "RTU address: {}".format(10)
-i2c_display.displayline5 = "RTU Baud: {}".format(19200)
-i2c_display.displayline6 = ""
+i2c_display.displayline4 = ""
+i2c_display.displayline5 = "RTU address: {}".format(slave_addr)
+i2c_display.displayline6 = "RTU Baud: {}".format(modbus_baud)
