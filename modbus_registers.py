@@ -15,66 +15,91 @@ def set_output_callback(reg_type, address, val):
 registers = {
     "HREGS": {
         "STATUS_REGISTER": {
-            "register": 1,
+            "register": 0x01,
             "len": 1,
             "val": 255,
             "on_set_cb": set_status_callback    
         },
+        "ALARM_REGISTER": {
+            "register": 0x02,
+            "len": 1,
+            "val": 0,   
+        },         
         "INPUT_REGISTER": {
-            "register": 2,
+            "register": 0x03,
             "len": 1,
             "val": 255,    
         },
         "OUTPUT_REGISTER": {
-            "register": 3,
+            "register": 0x04,
             "len": 1,
             "val": 0,
             "on_set_cb": set_output_callback    
         },
         "EVENT_REGISTER": {
-            "register": 4,
+            "register": 0x05,
             "len": 1,
             "val": 0,
             "on_set_cb": event_callback    
         },          
         "COOLANT_REGISTER": {
-            "register": 100,
+            "register": 0x100,
             "len": 1,
             "val": 0,
             "on_set_cb": set_coolant_callback    
         },
         "PUMP1_REGISTER": {
-            "register": 101,
+            "register": 0x101,
             "len": 1,
             "val": 255,
             "on_set_cb": set_pump_callback    
         },
         "PUMP2_REGISTER": {
-            "register": 102,
+            "register": 0x102,
             "len": 1,
             "val": 255,
             "on_set_cb": set_pump_callback    
         },
         "SPINDLE_RUN_REGISTER": {
-            "register": 200,
+            "register": 0x200,
             "len": 1,
             "val": 0,
             "on_set_cb": set_spindle_callback    
         },
         "SPINDLE_SET_RPM_REGISTER": {
-            "register": 201,
+            "register": 0x201,
             "len": 1,
             "val": 0,
             "on_set_cb": set_spindle_callback    
         },        
         "ACTIVE_SPINDLE_REGISTER": {
-            "register": 202,
+            "register": 0x202,
             "len": 1,
             "val": 0,
             "on_set_cb": set_spindle_callback    
         },
         "ACTIVE_SPINDLE_RPM_REGISTER": {
-            "register": 203,
+            "register": 0x203,
+            "len": 1,
+            "val": 0,    
+        },
+        "ACTIVE_TOOL_REGISTER": {
+            "register": 0x300,
+            "len": 1,
+            "val": 0,    
+        },
+        "NEXT_TOOL_REGISTER": {
+            "register": 0x301,
+            "len": 1,
+            "val": 0,    
+        },
+        "ACTIVE_TOOL_POCKET": {
+            "register": 0x301,
+            "len": 1,
+            "val": 0,    
+        },
+        "NEXT_TOOL_POCKET": {
+            "register": 0x301,
             "len": 1,
             "val": 0,    
         },         
@@ -116,7 +141,6 @@ print('Register setup done')
 
 print('Serving as RTU client on address {} at {} baud'.
       format(slave_addr, modbus_baud))
-
 i2c_display.displayline4 = ""
 i2c_display.displayline5 = "RTU address: {}".format(slave_addr)
 i2c_display.displayline6 = "RTU Baud: {}".format(modbus_baud)
