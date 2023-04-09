@@ -8,6 +8,9 @@ import i2c_display
 from nuts_bolts import enum
 
 from machine import Pin
+
+slave_addr = 10             # address on bus as client
+modbus_baud = 9600
     
 def set_output_callback(reg_type, address, val):
     print('output pin update received')
@@ -112,9 +115,6 @@ from umodbus import version
 import json
 
 import modbus_registers
-
-slave_addr = 10             # address on bus as client
-modbus_baud = 19200
 
 # the following definition is for a RP2
 rtu_pins = (Pin(12), Pin(13))     # (TX, RX)

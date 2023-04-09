@@ -1,6 +1,6 @@
 from nuts_bolts import program_flow
 from collections import deque
-import modbus_registers
+#import modbus_registers
 
 from indicator_lights import finish_flag
 

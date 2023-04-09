@@ -13,27 +13,29 @@ relay4_pin = 20
 #only assign pins if they are defined.
 try :
     if(relay1_pin) :
-        mist = Pin(24, Pin.OUT)    
+        mist = Pin(24, Pin.OUT)
+        mist.value(0)
     if(relay4_pin) :
         flood = Pin(20, Pin.OUT)
+        flood.value(0)
 except NameError:
     mist=0
     flood=0
 
-def update_coolant_pins(pins):
+def update_coolant_pins():
+    from modbus_registers import client
     #only update the pins if they were assigned.
     if(mist) :
-        mist.value(pins & 1)
+        mist.value(client.get_hreg(0x100) & 1)
     
     if(flood) :
-        flood.value(pins & 2)
+        flood.value(client.get_hreg(0x100) & 2)
 
 
 def set_coolant_callback(reg_type, address, val):
     global client
     global displayline1
-    print('coolant update received {}'.format(val[0]))
     i2c_display.displayline4 = 'Coolant: {}'.format(val[0])
-    update_coolant_pins(val[0])
+    update_coolant_pins()
     
-update_coolant_pins(0)
+#update_coolant_pins()
