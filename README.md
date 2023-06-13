@@ -1,6 +1,6 @@
 ![Logo](/readme_images/logo_sm.jpg)
 # picohal-firmware
-Micropython firmware for the PicoHAL
+## Micropython firmware for the PicoHAL
 <img src="/readme_images/Board_Photo.jpg" width="800">
 
 This is designed to work with the PicoHAL GRBLHAL plugin but the events could be sent by any Modbus host like LinuxCNC or similar.
