@@ -9,6 +9,7 @@ https://github.com/Expatria-Technologies/Plugins_picoHAL
 
 Copied from above:
 #### The PicoHAL has the following characteristics:
+  - RP2040 Microcontroller
   - Familiar Arduino Uno inspired form factor
   - RS485 input and pass-through
   - 5-24V power input (can be USB powered)
