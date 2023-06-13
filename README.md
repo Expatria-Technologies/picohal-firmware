@@ -8,6 +8,7 @@ https://github.com/Expatria-Technologies/Plugins_picoHAL
 Copied from above:
 #### The PicoHAL has the following characteristics:
   - Familiar Arduino Uno inspired form factor
+  - RS485 input and pass-through
   - 5-24V power input (can be USB powered)
   - Works with CNC shield
   - Works with Relay shield
