@@ -17,7 +17,8 @@ Copied from above:
   - 9 true 5V outputs
   - 9 true 5V inputs
   - 5V UART interface
-  - 2 analog inputs
+  - 5V I2C interface
+  - 2 5V tolerant analog inputs
 
 In addition, there are plug headers for the following:
   - 4 2 amp relay drivers (Labelled Red/Green/Blue/White
