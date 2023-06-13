@@ -1,17 +1,17 @@
 from machine import Timer
 import time
 import _thread
+import program_steppers
 
 tick_timer_period = 20 # Hz
 systick = 0
 
-from modbus_registers import client
-import i2c_display    
-import indicator_lights
+from modbus_registers import client 
 from event_handler import process_event
+from nuts_bolts import current_state, program_flow
 
-screen_update_period = 5 # update screen every 250ms
-screen_update_counter = 0 
+
+
 
 # Set up the action timer.
 tim = Timer()
@@ -24,12 +24,7 @@ def tick(timer):                # we will receive the timer object when being ca
     global systick
     global led
     global screen_update_counter, led_update_counter
-    
-    if i2c_display :
-        screen_update_counter = screen_update_counter - 1
-        if screen_update_counter < 0:
-            screen_update_counter = 0
-        
+           
     led_update_counter = led_update_counter - 1
     if led_update_counter < 0:
         led_update_counter = 0
@@ -45,13 +40,5 @@ while True:
     process_event()
 
     if led_update_counter == 0:
-        indicator_lights.process_indicators()
         led_update_counter = led_update_period
-        
-    if (screen_update_counter == 0):
-        i2c_display.displayline2 = 'status: {}'.format(client.get_hreg(1))
-        i2c_display.displayline3 = "tick " + str(systick)
-        if i2c_display :
-            i2c_display.update_display()
-        screen_update_counter = screen_update_period
         
