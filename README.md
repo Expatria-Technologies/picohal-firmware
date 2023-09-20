@@ -18,15 +18,7 @@ Copied from above:
   - Works with stackable relay shields
 
 #### Shield I/O:
-  - 9 true 5V outputs
-  - 9 true 5V inputs
-  - 5V UART interface
-  - 5V I2C interface
-  - 2 5V tolerant analog inputs
+Arduino I/O connected to similar function RP2040 pins.
 
 In addition, there are plug headers for the following:
-  - 4 2 amp relay drivers (Labelled Red/Green/Blue/White
-  - Buffered 5V Neopixel driver
-  - 5V tolerant user input
-  
-Finally it has I2C exposed to mount a small 1.3 inch OLED for more visual feedback.
+ - Two buffered 5V output signals for Neopixels or other I/O
