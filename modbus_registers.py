@@ -3,14 +3,13 @@ from coolant_control import set_coolant_callback
 from event_handler import event_callback
 from spindle_control import set_spindle_callback
 from indicator_lights import set_status_callback
-import i2c_display
 
 from nuts_bolts import enum
 
 from machine import Pin
 
 slave_addr = 10             # address on bus as client
-modbus_baud = 9600
+modbus_baud = 115200
     
 def set_output_callback(reg_type, address, val):
     print('output pin update received')
@@ -117,8 +116,8 @@ import json
 import modbus_registers
 
 # the following definition is for a RP2
-rtu_pins = (Pin(12), Pin(13))     # (TX, RX)
-uart_id = 0
+rtu_pins = (Pin(8), Pin(9))     # (TX, RX)
+uart_id = 1
 
 client = ModbusRTU(
     addr=slave_addr,        # address on bus
@@ -127,7 +126,7 @@ client = ModbusRTU(
     data_bits=8,          # optional, default 8
     stop_bits=1,          # optional, default 1
     parity=None,          # optional, default None
-    ctrl_pin=26,          # optional, control DE/RE
+    ctrl_pin=27,          # optional, control DE/RE
     uart_id=uart_id         # optional, default 1, see port specific documentation
 )
 
@@ -141,6 +140,3 @@ print('Register setup done')
 
 print('Serving as RTU client on address {} at {} baud'.
       format(slave_addr, modbus_baud))
-i2c_display.displayline4 = ""
-i2c_display.displayline5 = "RTU address: {}".format(slave_addr)
-i2c_display.displayline6 = "RTU Baud: {}".format(modbus_baud)

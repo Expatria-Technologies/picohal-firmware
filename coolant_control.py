@@ -1,9 +1,7 @@
-import i2c_display
 from machine import Pin
 
 #By default, use GPIOs 20 and 24 for coolant relay control as these allow XY step/dir when cnc shield is populated
-#Mist is on GPIO 7 (Relay 1) and Flood is on GPIO 4 (Relay 4).  Pins could also be assigned to outputs on the LED drivers
-#to mimic Flexi-HAL I/O
+#Mist is on GPIO 7 (Relay 1) and Flood is on GPIO 4 (Relay 4).
 
 relay1_pin = 24
 #relay2_pin = 22
@@ -35,7 +33,6 @@ def update_coolant_pins():
 def set_coolant_callback(reg_type, address, val):
     global client
     global displayline1
-    i2c_display.displayline4 = 'Coolant: {}'.format(val[0])
     update_coolant_pins()
     
 #update_coolant_pins()

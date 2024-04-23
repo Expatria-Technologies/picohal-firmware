@@ -1,4 +1,5 @@
-#by default, use X and Y step/dir pins
+#This script can control upt to 2 stepper motors.  The pinout is based on PicoHAL with the CNC Shield with drivers installed in the X and Y
+#motor slots.
 
 from machine import Pin, Timer
 from utime import sleep_us
