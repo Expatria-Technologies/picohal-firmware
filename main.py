@@ -9,6 +9,7 @@ systick = 0
 from modbus_registers import client
 import indicator_lights
 from event_handler import process_event
+from fan_control import update_fan
 
 screen_update_period = 10 # update screen every 250ms
 screen_update_counter = 0 
@@ -40,16 +41,17 @@ def modbus_thread():
         time.sleep_ms(10)
         gc.collect()
         
-mb_thread = _thread.start_new_thread(modbus_thread, ())
+#mb_thread = _thread.start_new_thread(modbus_thread, ())
 
 print('Deploying')
-indicator_lights.finish_flag()
+#indicator_lights.finish_flag()
 while True:
     time.sleep_ms(10)
     process_event()
 
     if led_update_counter == 0:
         indicator_lights.process_indicators()
+        update_fan()
         led_update_counter = led_update_period
         
 

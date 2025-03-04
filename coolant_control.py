@@ -3,10 +3,10 @@ from machine import Pin
 #By default, use GPIOs 20 and 24 for coolant relay control as these allow XY step/dir when cnc shield is populated
 #Mist is on GPIO 7 (Relay 1) and Flood is on GPIO 4 (Relay 4).
 
-relay1_pin = 24
-#relay2_pin = 22
-#relay3_pin = 23
-relay4_pin = 20
+relay1_pin = 14
+relay2_pin = 15
+relay3_pin = 24
+relay4_pin = 23
 
 #only assign pins if they are defined.
 try :

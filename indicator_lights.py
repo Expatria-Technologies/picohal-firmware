@@ -5,7 +5,7 @@ from neopixel_control import update_neopixel
 from time import sleep_ms
 
 #define the user button here
-user_button = 11
+user_button = 16
 
 #only assign pins if they are defined.
 try :
@@ -46,7 +46,7 @@ def update_led_state():
     else :
         update_neopixel(25,25,25,25)
     
-    update_neopixel(255, 255, 255, 255)
+    #update_neopixel(255, 255, 255, 255)
     
         
 def process_indicators():

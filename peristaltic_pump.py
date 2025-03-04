@@ -5,10 +5,10 @@ from machine import Pin, Timer
 from utime import sleep_us
 from rp2 import PIO, StateMachine, asm_pio
 
-enable_pin=Pin(27, Pin.OUT)
-#step_pin=Pin(18, Pin.OUT)              # set the output only if using the pump, move to modbus callback
-dir_pin=Pin(22, Pin.OUT)              # set the output only if using the pump
-#step_pin.value(0)
+enable_pin=Pin(6, Pin.OUT)
+step_pin=Pin(4, Pin.OUT)              # set the output only if using the pump, move to modbus callback
+dir_pin=Pin(5, Pin.OUT)              # set the output only if using the pump
+step_pin.value(0)
 enable_pin.value(0)
 step_timer = Timer()
 accel_timer = Timer()

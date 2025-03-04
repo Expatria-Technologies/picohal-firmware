@@ -4,12 +4,13 @@ import time
 # set up the neopixels
 
 numpix = 20
-brightness = 32
+brightness = 255
 
-strip_type = "RGB"
+strip_type = "GRB"
 
 # using State Machine 0 and pin 26
-strip = Neopixel(numpix, 0, 26, strip_type)
+strip = Neopixel(numpix, 0, 20, strip_type)
+strip0 = Neopixel(numpix, 1, 21, strip_type)
 
 red = (255, 0, 0)
 orange = (255, 100, 0)
@@ -32,10 +33,24 @@ strip.set_pixel(5, violet)
 strip.set_pixel(6, white)
 strip.set_pixel(7, indigo)
 strip.show()
-time.sleep_ms(1000)
+strip0.fill(off)
+strip0.show()
+strip0.brightness(brightness)
+strip0.set_pixel(0, red)
+strip0.set_pixel(1, green)
+strip0.set_pixel(2, blue)
+strip0.set_pixel(3, orange)
+strip0.set_pixel(4, yellow)
+strip0.set_pixel(5, violet)
+strip0.set_pixel(6, white)
+strip0.set_pixel(7, indigo)
+strip0.show()
+time.sleep_ms(500)
+strip0.fill((50, 50, 50))
+strip0.show()
 
 def update_neopixel(red, green, blue, white):
-    strip.fill((red * 65535 // 255, green * 65535 // 255, blue * 65535 // 255, white * 65535 // 255))
+    strip.fill((red, green, blue))
     strip.show()
     
-update_neopixel(255,255,255,255)
+update_neopixel(25,25,25,25)
